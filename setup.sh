@@ -6,8 +6,10 @@ set -e
 # Update the system packages
 sudo apt update
 
-# Install Git and tmux non-interactively
+# Suspend needrestart and run upgrades non-interactively
+export NEEDRESTART_SUSPEND=1
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq git tmux
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 
 # Install Rust via rustup with no user interaction
 curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh -s -- -y
@@ -36,10 +38,5 @@ tmux send-keys -t m './target/release/xelis_miner --miner-address xel:qn8qqv7s3r
 
 # Detach from the tmux session
 tmux detach-client -s m
-
-# Check if a reboot is needed after updates and log it
-if [ -f /var/run/reboot-required ]; then
-  echo "$(date): Reboot required to load the new kernel." >> /path/to/reboot.log
-fi
 
 echo "All commands executed successfully. Mining in tmux session 'm'."
