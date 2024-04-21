@@ -37,4 +37,9 @@ tmux send-keys -t m './target/release/xelis_miner --miner-address xel:qn8qqv7s3r
 # Detach from the tmux session
 tmux detach-client -s m
 
+# Check if a reboot is needed after updates and log it
+if [ -f /var/run/reboot-required ]; then
+  echo "$(date): Reboot required to load the new kernel." >> /path/to/reboot.log
+fi
+
 echo "All commands executed successfully. Mining in tmux session 'm'."
