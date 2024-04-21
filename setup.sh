@@ -33,10 +33,18 @@ cargo build --release
 # Create a new tmux session named 'm' or attach if it already exists
 tmux new-session -d -s m
 
-# Send the mining command to the tmux session
-tmux send-keys -t m './target/release/xelis_miner --miner-address xel:qn8qqv7s3ruzel8dq9lp4shfxksapvq58cp2ul0cwpc2zpa6tansqqsc2ll --daemon-address wss://node.xelis.io' C-m
+# Get the number of CPU threads and subtract 2
+NUM_THREADS=$(($(nproc) - 2))
+
+# Check that NUM_THREADS is positive; if not, set it to 1
+if [ $NUM_THREADS -le 0 ]; then
+    NUM_THREADS=1
+fi
+
+# Send the mining command to the tmux session with the adjusted number of threads
+tmux send-keys -t m "./target/release/xelis_miner --miner-address xel:qn8qqv7s3ruzel8dq9lp4shfxksapvq58cp2ul0cwpc2zpa6tansqqsc2ll --daemon-address wss://node.xelis.io -n $NUM_THREADS" C-m
 
 # Detach from the tmux session
 tmux detach-client -s m
 
-echo "All commands executed successfully. Mining in tmux session 'm'."
+echo "All commands executed successfully. Mining in tmux session 'm' with $NUM_THREADS threads."
