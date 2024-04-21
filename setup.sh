@@ -6,15 +6,15 @@ set -e
 # Update the system packages
 sudo apt update
 
-# Install Git and tmux
-sudo apt install git tmux -y
+# Install Git and tmux non-interactively
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq git tmux
 
 # Install Rust via rustup with no user interaction
 curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Ensure the Cargo environment is set up
 source $HOME/.cargo/env
-sudo apt install cargo -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq cargo
 
 # Clone the Xelis blockchain repository
 git clone https://github.com/xelis-project/xelis-blockchain.git
