@@ -22,5 +22,7 @@ source ~/.bashrc
 git clone https://github.com/QuilibriumNetwork/ceremonyclient
 cd ceremonyclient/node
 
-# Start tmux session and run script
-tmux new-session -s quil ./poor_mans_cd.sh
+# Start tmux session, wait for 3 seconds, and then run script
+tmux new-session -d -s quil
+sleep 3
+tmux send-keys -t quil './poor_mans_cd.sh' Enter
