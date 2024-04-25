@@ -6,8 +6,8 @@ sudo apt install git -y
 sudo apt install tar -y
 sudo apt install tmux -y
 
-# Install Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install Rust with default options (non-interactive)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # Install Go
 wget https://golang.org/dl/go1.20.11.linux-amd64.tar.gz
